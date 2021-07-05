@@ -1,0 +1,38 @@
+ # PyCharm
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Stan models
+build
+
+# caches
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache
+.hypothesis
+.pytest_cache
+
+#.ipython
+history.sqlite
+
+# pip installer logs
+pip-log.txt
+
+# pyenv virtualenv
+.python-version
+
+# Other
+tmp
+test_data
+
+# logs
+logs/
+
+# MacOS specific.
+.DS_Store
+
+# Vim
+*.swp

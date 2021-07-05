@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  lab:
+    image: hyflow:current
+    build:
+      context: .
+      dockerfile: ./lab-Dockerfile
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        http_proxy: ${http_proxy}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+        https_proxy: ${https_proxy}
+    environment:
+      TZ: Europe/London
+    volumes:
+      - type: bind
+        source: ./workbench
+        target: /home/jovyan/work
+    ports:
+      - "8888:8888"
+    networks:
+      - net
+
+
+networks:
+  net:
