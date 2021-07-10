@@ -20,7 +20,7 @@ services:
         source: ./workbench
         target: /home/jovyan/work
     ports:
-      - "8888:8888"
+      - "0.0.0.0:8888:8888"
     networks:
       - net
 
