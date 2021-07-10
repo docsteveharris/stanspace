@@ -9,6 +9,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 USER ${NB_USER}
 
-RUN pip install  --no-cache-dir 'pystan' && \
+RUN pip install  --no-cache-dir 'pystan' 'jupyterstan' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
