@@ -23,6 +23,11 @@ services:
       - "0.0.0.0:8888:8888"
     networks:
       - net
+    # extend memory to permit cmdstan build?
+    deploy:
+      resources:
+        limits:
+          memory: 4gb
 
 
 networks:
