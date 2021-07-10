@@ -9,18 +9,16 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 USER ${NB_USER}
 
-# TODO: tidy up the following to reduce layers; just added sequentially while working
 RUN pip install  --no-cache-dir 'pystan' 'jupyterstan' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-
 RUN pip install --upgrade cmdstanpy[all]
+# SLOW! 2GB mem and > 10mins
+RUN install_cmdstan
 
-RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table'), repos='https://cloud.r-project.org'))"
+# TODO: tidy up the following to reduce layers; just added sequentially while working
+RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table', 'RStan'), repos='https://cloud.r-project.org')"
 RUN R -e "remotes::install_github('stan-dev/posterior')"
 RUN R -e "remotes::install_github('stan-dev/cmdstanr')"
-RUN R -e "install.packages(c('RStan'), repos='https://cloud.r-project.org'))"
 
-# RUN python -c "import cmdstanpy; cmdstanpy.install_cmdstan()"
-RUN install_cmdstan
 
