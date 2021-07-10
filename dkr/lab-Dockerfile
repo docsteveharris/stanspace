@@ -12,3 +12,11 @@ USER ${NB_USER}
 RUN pip install  --no-cache-dir 'pystan' 'jupyterstan' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+RUN pip install --upgrade cmdstanpy[all]
+
+RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table'), repos='https://cloud.r-project.org'))"
+RUN R -e "remotes::install_github('stan-dev/posterior')"
+RUN R -e "remotes::install_github('stan-dev/cmdstanr')"
+RUN R -e "install.packages(c('RStan'), repos='https://cloud.r-project.org'))"
+
