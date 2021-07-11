@@ -20,7 +20,15 @@ And then to inspect
 docker logs -f stanspace
 ```
 
+## Using the container's IPython
+From the host's command line; useful if you wish to ssh in remotely
+```
+docker-compose exec lab ipython
+```
+
 ## Stopping 
 ```
 docker-compose down
 ```
+
+
