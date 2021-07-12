@@ -3,7 +3,7 @@ version: "3.7"
 services:
 
   lab:
-    image: hyflow:current
+    container_name: stanspace
     build:
       context: .
       dockerfile: ./lab-Dockerfile
@@ -14,14 +14,20 @@ services:
         https_proxy: ${https_proxy}
     environment:
       TZ: Europe/London
+      JUPYTER_ENABLE_LAB: 'yes'
     volumes:
       - type: bind
         source: ./workbench
         target: /home/jovyan/work
     ports:
-      - "8888:8888"
+      - "0.0.0.0:8888:8888"
     networks:
       - net
+    # extend memory to permit cmdstan build?
+    deploy:
+      resources:
+        limits:
+          memory: 4gb
 
 
 networks:
