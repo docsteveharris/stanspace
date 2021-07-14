@@ -9,7 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 USER ${NB_USER}
 
-RUN pip install  --no-cache-dir 'pystan' 'jupyterstan' && \
+RUN pip install -U --no-cache-dir pip setuptools wheel pystan pystan-jupyter arviz && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 RUN pip install --upgrade cmdstanpy[all]
@@ -17,7 +17,7 @@ RUN pip install --upgrade cmdstanpy[all]
 RUN install_cmdstan
 
 # TODO: tidy up the following to reduce layers; just added sequentially while working
-RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table', 'RStan'), repos='https://cloud.r-project.org')"
+RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table', 'RStan', 'loo', 'rstanarm', 'rstantools', 'shinystan'), repos='https://cloud.r-project.org')"
 RUN R -e "remotes::install_github('stan-dev/posterior')"
 RUN R -e "remotes::install_github('stan-dev/cmdstanr')"
 
