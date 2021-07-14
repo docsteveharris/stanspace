@@ -4,12 +4,14 @@ USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install --yes --no-install-recommends procps ca-certificates \
+    apt-get install --yes --no-install-recommends procps ca-certificates libv8-dev \
     git curl libpq-dev curl gnupg g++
+
+RUN chown -R ${NB_USER} /opt/conda
 
 USER ${NB_USER}
 
-RUN pip install  --no-cache-dir 'pystan' 'jupyterstan' && \
+RUN pip install -U --no-cache-dir pip setuptools wheel pystan pystan-jupyter arviz && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 RUN pip install --upgrade cmdstanpy[all]
@@ -17,8 +19,10 @@ RUN pip install --upgrade cmdstanpy[all]
 RUN install_cmdstan
 
 # TODO: tidy up the following to reduce layers; just added sequentially while working
-RUN R -e "install.packages(c('dplyr', 'lubridate', 'ggplot2', 'bayesplot', 'fs', 'stringr', 'remotes', 'data.table', 'RStan'), repos='https://cloud.r-project.org')"
-RUN R -e "remotes::install_github('stan-dev/posterior')"
-RUN R -e "remotes::install_github('stan-dev/cmdstanr')"
+RUN conda install r-dplyr r-ggplot2 r-lubridate r-bayesplot r-fs r-stringr r-remotes r-data.table r-Rstan r-loo r-rstanarm r-rstantools r-shinystan
+RUN /opt/conda/bin/R -e "remotes::install_github('stan-dev/posterior')"
+RUN /opt/conda/bin/R -e "remotes::install_github('stan-dev/cmdstanr')"
+
+
 
 
