@@ -36,3 +36,7 @@ logs/
 
 # Vim
 *.swp
+
+# stan compiled files
+*.hpp
+
